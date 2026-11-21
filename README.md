@@ -20,6 +20,8 @@ move or resize the window.
 - Every send comes back with screenshots, so the agent sees it landed in the
   right window and the right chat.
 - Three modes per seat: nudge (wake only), own (preset text), free (any text).
+- Steps look like seats: select, type, speak or go, stacked under each seat.
+- One agent at a time: agents take a key and the rest queue, so sequences never mix.
 - Always on top, so the bar never drops out of sight.
 - A local control door so your agents drive it directly.
 

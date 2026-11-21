@@ -31,12 +31,21 @@ curl -s http://127.0.0.1:8133/mcp -H "Content-Type: application/json" \
 | `nudge_dock_seats` | Lists the seats (1-10): which app sits in each, its mode, ready or off, and its steps. |
 | `nudge_dock_aim` `{seat}` | Lights up that seat's input box and returns a screenshot. Types nothing. |
 | `nudge_dock_step` `{seat, step}` | Clicks one of the seat's steps (number or name) and returns a screenshot. Types nothing. |
-| `nudge_dock_send` `{seat, text, from, steps}` | Runs the listed steps in order, then the glow hops to the seat, pastes, sends. Returns the screenshots. |
+| `nudge_dock_take` `{from}` | Waits your turn, then gives you a key: Nudge Dock is yours until you release it or 45s pass without a call. |
+| `nudge_dock_release` `{key}` | Frees Nudge Dock for the next agent in the queue. |
+| `nudge_dock_send` `{seat, text, from, steps, key}` | Runs the listed steps in order, then the glow hops to the seat, pastes, sends. Returns the screenshots. |
 
 Screenshots come back in the tool result as images, so you can confirm you landed in the right window and the right chat before you go on.
 
 `seat` is `1` to `10`, or the seated app's name (e.g. `grok`, `chatgpt`).
 `steps` is a list of step numbers or names, e.g. `["BVC #4"]`, run in order before the text goes in.
+Each step is labelled by what it does: select, type, speak or go.
+
+## One agent at a time
+
+A single `nudge_dock_send` with its steps always runs as one unbroken sequence. When your sequence needs several calls,
+take a key first, pass it on every call, and release it at the end. Everyone else waits in the queue; nothing from another
+agent can land in the middle of yours. A result that starts `[queued Ns]` waited its turn.
 `from` is your agent name, for the log.
 
 ## Seat modes (set by the owner, per seat)
